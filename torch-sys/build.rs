@@ -499,22 +499,21 @@ fn main() -> anyhow::Result<()> {
         if cfg!(feature = "python-extension") {
             system_info.link("torch_python")
         }
-        if system_info.link_type == LinkType::Static {
-            system_info.link("clog");
-            system_info.link("cpuinfo");
-            system_info.link("fmt");
-            system_info.link("pthreadpool");
-            system_info.link("pytorch_qnnpack");
-            system_info.link("XNNPACK");
-            system_info.link("microkernels-prod");
-            system_info.link("sleef");
-            system_info.link("blis");
-        }
         system_info.link("torch_cpu");
         system_info.link("torch");
         system_info.link("c10");
         if use_hip {
             system_info.link("c10_hip");
+        }
+        if system_info.link_type == LinkType::Static {
+            system_info.link("pytorch_qnnpack");
+            system_info.link("XNNPACK");
+            system_info.link("microkernels-prod");
+            system_info.link("eigen_blas");
+            system_info.link("fmt");
+            system_info.link("pthreadpool");
+            system_info.link("cpuinfo");
+            system_info.link("clog");
         }
     }
     Ok(())
